@@ -2,11 +2,22 @@ version: 0.0
 os: linux
 
 files:
-  - source: /
-    destination: /home/ubuntu/app # 인스턴스에서 파일이 저장될 위치
+  - source:  /
+    destination: /home/ubuntu/cicd
+    overwrite: yes
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
 
 hooks:
   AfterInstall:
-    - location: deploy.sh
+    - location: scripts/stop.sh
+      timeout: 60
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/start.sh
       timeout: 60
       runas: ubuntu
