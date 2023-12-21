@@ -58,7 +58,7 @@ jobs:
     
     # 압축한 프로젝트를 S3로 전송
     - name: Upload to S3
-      run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://${{ env.AWS_CODE_BUCKET_NAME }}/cicdDir/$GITHUB_SHA.zip --source .
+      run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://${{ env.AWS_CODE_BUCKET_NAME }}/practice-deploy.zip
     ## EC2 배포
     - name : exc2 배포
       run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} 
