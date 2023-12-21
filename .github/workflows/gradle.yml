@@ -53,7 +53,7 @@ jobs:
 
       # 배포 그룹으로 애플리케이션 전송
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name cd-application-cicd --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name codeDeploy --s3-location bucket=dkseo8484,bundleType=zip,key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
+      run: aws deploy create-deployment --application-name cd-application-cicd --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name codeDeploy --s3-location bucket=dkseo8484,bundleType=zip,key=practice-deploy.zip
     - name: Generate deployment package
       run: |
         mkdir -p before-deploy
