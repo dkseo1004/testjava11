@@ -29,11 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set up JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '17'
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
         tasks: build
     - name: Configure AWS credentials
