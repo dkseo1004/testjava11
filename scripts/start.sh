@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROOT_PATH="/home/ubuntu/cicd"
+ROOT_PATH="/home/ubuntu/cicd/build/libs"
 JAR="$ROOT_PATH/application.jar"
 
 APP_LOG="$ROOT_PATH/application.log"
