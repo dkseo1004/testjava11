@@ -1,9 +1,9 @@
 #!/bin/bash
 
-ROOT_PATH="/home/ubuntu/cicd/build/libs"
-JAR="$ROOT_PATH/application.jar"
+ROOT_PATH="/home/ubuntu/cicd"
+JAR="$ROOT_PATH/build/libs/application.jar"
 
-APP_LOG="$ROOT_PATH/application.log"
+APP_LOG="$ROOT_PATH/build/libs/application.log"
 ERROR_LOG="$ROOT_PATH/error.log"
 START_LOG="$ROOT_PATH/start.log"
 
