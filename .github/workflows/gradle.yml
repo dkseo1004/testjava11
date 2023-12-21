@@ -16,6 +16,13 @@ on:
 permissions:
   contents: read
 
+env:
+  AWS_REGION: ap-northeast-2
+  AWS_S3_BUCKET: app-release-files 
+  AWS_CODE_BUCKET_NAME : dkseo8484    #  버킷 이름
+  AWS_CODE_DEPLOY_APPLICATION: cd-application-cicd    # 애플리케이션 이름
+  AWS_CODE_DEPLOY_GROUP: codeDeploy      #  배포 그룹 이름
+
 jobs:
   build:
 
@@ -51,6 +58,10 @@ jobs:
     
     # 압축한 프로젝트를 S3로 전송
     - name: Upload to S3
-      run: aws s3 sync ./build s3://dkseo8484
-
-      
+      run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://${{ env.AWS_CODE_BUCKET_NAME }}/cicdDir/$GITHUB_SHA.zip --source .
+    ## EC2 배포
+    - name : exc2 배포
+      run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} 
+          --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} 
+          --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
+          
