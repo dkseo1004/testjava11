@@ -58,7 +58,7 @@ jobs:
     
     # 압축한 프로젝트를 S3로 전송
     - name: Upload to S3
-       run:aws s3 sync ./build s3://dkseo8484
+      run: aws s3 cp --region ap-northeast-2 ./practice-deploy.zip s3://dkseo8484/practice-deploy.zip
     ## EC2 배포
     - name : exc2 배포
       run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} 
