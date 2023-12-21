@@ -23,6 +23,7 @@ env:
   AWS_CODE_DEPLOY_APPLICATION: cd-application-cicd    # 애플리케이션 이름
   AWS_CODE_DEPLOY_GROUP: codeDeploy      #  배포 그룹 이름
 
+
 jobs:
   build-with-gradle:
     runs-on: ubuntu-latest
@@ -44,4 +45,4 @@ jobs:
     - name: Upload to S3
       run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --s3-location s3://${{ env.AWS_CODE_BUCKET_NAME }}/cicdDir/$GITHUB_SHA.zip --ignore-hidden-files
     - name: Deploy to EC2
-      run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
+      run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},/$GITHUB_SHA.zip,bundleType=zip
