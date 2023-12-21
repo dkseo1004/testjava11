@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradl
 
 name: Java CI with Gradle
 
@@ -15,13 +15,6 @@ on:
 
 permissions:
   contents: read
-
-env:
-  AWS_REGION: ap-northeast-2
-  AWS_S3_BUCKET: app-release-files 
-  AWS_CODE_BUCKET_NAME : dkseo8484    #  버킷 이름
-  AWS_CODE_DEPLOY_APPLICATION: cd-application-cicd    # 애플리케이션 이름
-  AWS_CODE_DEPLOY_GROUP: codeDeploy      #  배포 그룹 이름
 
 jobs:
   build:
@@ -35,20 +28,18 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: 그래들 권한
+    - name: gradlew에 실행 권한 부여
       run: chmod +x ./gradlew
-      shell: bash
     - name: Build with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
         arguments: build
-
-         # 프로젝트 압축
+    # 프로젝트 압축
     - name: Make zip file
       run: zip -r ./practice-deploy.zip .
       shell: bash
-
-      # AWS 권한 확인
+    
+    # AWS 권한 확인
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -59,9 +50,17 @@ jobs:
     # 압축한 프로젝트를 S3로 전송
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./practice-deploy.zip s3://dkseo8484/practice-deploy.zip
-    ## EC2 배포
-    - name : exc2 배포
-      run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} 
-          --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} 
-          --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
-          
+
+      # 배포 그룹으로 애플리케이션 전송
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name cd-application-cicd --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name codeDeploy --s3-location bucket=dkseo8484,bundleType=zip,key=practice-deploy.zip
+    - name: Generate deployment package
+      run: |
+        mkdir -p before-deploy
+        cp scripts/*.sh before-deploy/
+        cp appspec.yml before-deploy/
+        cp build/libs/*.jar before-deploy/
+        cd before-deploy && zip -r before-deploy *
+        cd ../ && mkdir -p deploy
+        mv before-deploy/before-deploy.zip deploy/$test.zip
+      shell: bash
