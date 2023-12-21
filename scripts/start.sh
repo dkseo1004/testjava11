@@ -1,11 +1,11 @@
 #!/bin/bash
 
 ROOT_PATH="/home/ubuntu/cicd"
-JAR="$ROOT_PATH/build/libs/application.jar"
+JAR="$ROOT_PATH/application.jar"
 
 APP_LOG="$ROOT_PATH/build/libs/application.log"
-ERROR_LOG="$ROOT_PATH/error.log"
-START_LOG="$ROOT_PATH/start.log"
+ERROR_LOG="$ROOT_PATH/build/libs/error.log"
+START_LOG="$ROOT_PATH/build/libs/start.log"
 
 NOW=$(date +%c)
 
