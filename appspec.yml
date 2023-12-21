@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source:  /
-    destination: /home/ubuntu/app
+    destination: /home/ubuntu/cicd
     overwrite: yes
 
 permissions:
@@ -21,3 +21,4 @@ hooks:
     - location: scripts/start.sh
       timeout: 60
       runas: ubuntu
+#####
