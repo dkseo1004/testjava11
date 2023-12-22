@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash1
 
 ROOT_PATH="/home/ubuntu/cicd"
 JAR="$ROOT_PATH/application.jar"
