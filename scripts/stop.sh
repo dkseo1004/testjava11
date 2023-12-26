@@ -1,19 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-ABSPATH=$(readlink -f $0) # 절대경로
-ABSDIR=$(dirname $ABSPATH ) # 현재 stop.sh가 속해있는 경로를 찾는다.
-source ${ABSDIR}/profile.sh # 자바로 보면 일종의 import 구문, stop.sh에서도 profile.sh의 여러 function을 사용 가능
+ROOT_PATH="/home/ubuntu/cicd"
+JAR="$ROOT_PATH/application.jar"
 
-IDLE_PORT=$(find_idle_port)
+APP_LOG="$ROOT_PATH/application.log"
+ERROR_LOG="$ROOT_PATH/error.log"
+START_LOG="$ROOT_PATH/start.log"
 
-echo "> $IDLE_PORT 에서 구동중인 애플리케이션 pid 확인"
-IDLE_PID=$(lsof -ti tcp:${IDLE_PORT})
+NOW=$(date +%c)
 
-if [ -z ${IDLE_PID} ]
-then
-  echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
-else
-  echo "> kill -15 $IDLE_PID"
-  kill -15 ${IDLE_PID}
-  sleep 5
-fi
+echo "[$NOW] $JAR 복사" >> $START_LOG
+cp $ROOT_PATH/build/libs/*.jar $JAR
+
+echo "[$NOW] > $JAR 실행" >> $START_LOG
+nohup java -jar $JAR > $APP_LOG 2> $ERROR_LOG &
+
+SERVICE_PID=$(pgrep -f $JAR)
+echo "[$NOW] > 서비스 PID: $SERVICE_PID" >> $START_LOG
