@@ -12,11 +12,11 @@ public class testController {
 			return "tst12";
 	}
 
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}@GetMapping("/home")
-	public String home() {
-		return "home";
-	}
+	// @GetMapping("/")
+	// public String index() {
+	// 	return "index";
+	// }@GetMapping("/home")
+	// public String home() {
+	// 	return "home";
+	// }
 }
