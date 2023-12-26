@@ -5,8 +5,8 @@
 
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
-source ${ABSDIR}/profile.sh
-source ${ABSDIR}/switch.sh
+source script/profile.sh
+source script/switch.sh
 
 IDLE_PORT=$(find_idle_port)
 
