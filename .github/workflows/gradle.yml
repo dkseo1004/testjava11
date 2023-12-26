@@ -50,11 +50,4 @@ jobs:
       run: aws s3 cp ./deploy/fruit-mall.zip s3://dkseo8484/jar-folder/
 
     - name: Code Deploy
-      run: |
-        aws deploy create-deployment \
-        --application-name cd-application-cicd \
-        --deployment-config-name CodeDeployDefault.AllAtOnce \
-        --deployment-group-name codeDeploy \
-        --file-exists-behavior OVERWRITE \
-        --s3-location bucket=dkseo8484,bundleType=zip,key=jar-folder/fruit-mall.zip \
-        --region ap-northeast-2
+      run: aws deploy create-deployment --application-name cd-application-cicd --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name codeDeploy --s3-location bucket=dkseo8484,bundleType=zip,key=jar-folder.zip
