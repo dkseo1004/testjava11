@@ -1,26 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-ROOT_PATH="/home/ubuntu/cicd"
-JAR="$ROOT_PATH/application.jar"
+ABSPATH=$(readlink -f $0)
+ABSDIR=$(dirname $ABSPATH)
+source ${ABSDIR}/profile.sh   # import profile.sh
 
-APP_LOG="$ROOT_PATH/application.log"
-ERROR_LOG="$ROOT_PATH/error.log"
-START_LOG="$ROOT_PATH/start.log"
+REPOSITORY=/home/ubuntu.cicd
 
-NOW=$(date +%c)
+echo "> Build 파일 복사"
+echo "> cp $REPOSITORY/build/libs/*.jar $REPOSITORY/"
 
-echo "[$NOW] $JAR 복사" >> $START_LOG
-cp $ROOT_PATH/build/libs/*.jar $JAR
+cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
-echo "[$NOW] > $JAR 실행" >> $START_LOG
-nohup java -jar $JAR > $APP_LOG 2> $ERROR_LOG &
+echo "> 새 어플리케이션 배포"
+JAR_NAME=$(ls -tr $REPOSITORY/build/libs/*.jar | tail -n 1)    # jar 이름 꺼내오기
 
-SERVICE_PID=$(pgrep -f $JAR)
-echo "[$NOW] > 서비스 PID: $SERVICE_PID" >> $START_LOG
+echo "> JAR Name: $JAR_NAME"
 
-echo "> $JAR 를 profile=$IDLE_PROFILE 로 실행합니다."
-echo "[$NOW] > Spring active profile set to: $IDLE_PROFILE" >> $START_LOG
+echo "> $JAR_NAME 에 실행권한 추가"
+
+chmod +x $JAR_NAME
+
+echo "> $JAR_NAME 실행"
+
+IDLE_PROFILE=$(find_idle_profile)
+
+echo "> $JAR_NAME 를 profile=$IDLE_PROFILE 로 실행합니다."
 nohup java -jar \
-  -Dspring.profiles.active=$IDLE_PROFILE \
-  $JAR > $REPOSITORY/nohup.out 2>&1 &
-
+    -Dspring.profiles.active=$IDLE_PROFILE \   # 위에서 보았던 것처럼 $IDLE_PROFILE에는 real1 or real2가 반환되는데 반환되는 properties를 실행한다는 뜻입니다.
+    $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
