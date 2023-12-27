@@ -12,17 +12,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class ProfileController {
+	private static final List<String> DEV_PROFILES = Arrays.asList("dev", "dev2");
+	private static final String DEFAULT_PROFILE = "default";
 	private final Environment env;
 
 	@GetMapping("/profile")
 	public String profile() {
 		List<String> profiles = Arrays.asList(env.getActiveProfiles());
-		List<String> realProfiles = Arrays.asList("real", "real1", "real2");
-		String defaultProfile = profiles.isEmpty() ? "default" : profiles.get(0);
+		String defaultProfile = profiles.isEmpty() ? DEFAULT_PROFILE : profiles.get(0);
 
-		return profiles.stream()
-			.filter(realProfiles::contains)
-			.findAny()
-			.orElse(defaultProfile);
+		return profiles.stream().filter(DEV_PROFILES::contains).findAny().orElse(defaultProfile);
 	}
 }
