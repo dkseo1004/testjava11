@@ -39,3 +39,5 @@ tasks.named('test') {
 jar {
     enabled = false
 }
+
+version '1.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
