@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 ABSPATH=$(readlink -f $0)
+echo "ABSPATH: $ABSPATH"
 ABSDIR=$(dirname $ABSPATH)
+echo "ABSPATH: $ABSDIR"
+
 source ${ABSDIR}/profile.sh
 source ${ABSDIR}/switch.sh
 

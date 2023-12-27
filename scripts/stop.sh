@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 ABSPATH=$(readlink -f $0)
+echo "ABSPATH: $ABSPATH"
+
 ABSDIR=$(dirname $ABSPATH)
+echo "ABSDIR: $ABSDIR"
+
 source ${ABSDIR}/profile.sh
 
 IDLE_PORT=$(find_idle_port)
