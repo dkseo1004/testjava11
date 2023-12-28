@@ -32,7 +32,7 @@ function find_idle_port()
 
   if [ ${IDLE_PROFILE} == set1 ]
   then
-    echo "8081" # 여기도 마찬가지로 return 기능의 느낌
+    echo "8081"
   else
     echo "8082"
   fi
