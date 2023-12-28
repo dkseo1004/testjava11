@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 
-# $IDLE_PROFILE을 통해 properties 값을 가져오고 active profile을 지정한다
-
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
-source ${ABSDIR}/profile.sh
+source ${ABSDIR}/profile.sh   # import profile.sh
 
-REPOSITORY=/home/ubuntu/cicd
+REPOSITORY=/home/ubuntu/app/step3
 
 echo "> Build 파일 복사"
-echo "> cp $REPOSITORY/*.jar $REPOSITORY/"
+echo "> cp $REPOSITORY/zip/*.jar $REPOSITORY/"
 
-cp $REPOSITORY/build/libs/*.jar $REPOSITORY/
+cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
 echo "> 새 어플리케이션 배포"
-JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)    # jar 이름 꺼내오기
 
 echo "> JAR Name: $JAR_NAME"
 
@@ -28,6 +26,5 @@ IDLE_PROFILE=$(find_idle_profile)
 
 echo "> $JAR_NAME 를 profile=$IDLE_PROFILE 로 실행합니다."
 nohup java -jar \
-    -Dspring.profiles.active=$IDLE_PROFILE *.jar & \
+    -Dspring.profiles.active=$IDLE_PROFILE \
     $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
-
