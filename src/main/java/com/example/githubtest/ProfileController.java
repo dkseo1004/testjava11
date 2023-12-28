@@ -12,14 +12,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class ProfileController {
-
 	private final Environment env;
 
-	@GetMapping("/profile")
-	public String getProfile() {
+	@GetMapping("/")
+	public String gyunny() {
 		List<String> profile = Arrays.asList(env.getActiveProfiles());
-		System.out.println(profile + "포트 확인");
-		List<String> realProfiles = Arrays.asList("set1", "set2");
+		List<String> realProfiles = Arrays.asList("real1", "real2");
 		String defaultProfile = profile.isEmpty() ? "default" : profile.get(0);
 
 		return profile.stream()
@@ -27,5 +25,4 @@ public class ProfileController {
 			.findAny()
 			.orElse(defaultProfile);
 	}
-
 }
