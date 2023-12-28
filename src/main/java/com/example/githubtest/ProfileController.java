@@ -18,6 +18,7 @@ public class ProfileController {
 	@GetMapping("/profile")
 	public String getProfile() {
 		List<String> profile = Arrays.asList(env.getActiveProfiles());
+		System.out.println(profile + "포트 확인");
 		List<String> realProfiles = Arrays.asList("set1", "set2");
 		String defaultProfile = profile.isEmpty() ? "default" : profile.get(0);
 
