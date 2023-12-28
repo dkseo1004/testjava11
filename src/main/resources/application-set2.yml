@@ -4,4 +4,4 @@ spring:
     activate:
       on-profile: set2
 server:
-  port: 8082
+  port: 80822
