@@ -1,40 +1,32 @@
 #!/usr/bin/env bash
 
-# Nginx와 연결되지 않은 포트로 스프링 부트가 잘 수행되었는지 체크
+# $IDLE_PROFILE을 통해 properties 값을 가져오고 active profile을 지정한다
+
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh
-source ${ABSDIR}/switch.sh
 
-IDLE_PORT=$(find_idle_port)
+REPOSITORY=/home/ubuntu/app
 
-echo "> Health Check Start!"
-echo "> IDLE_PORT: $IDLE_PORT"
-echo "> curl -s http://localhost:$IDLE_PORT/profile "
-sleep 10
+echo "> Build 파일 복사"
+echo "> cp $REPOSITORY/b/*.jar $REPOSITORY/"
 
-for RETRY_COUNT in {1..10}
-do
-  RESPONSE=$(curl -s http://localhost:${IDLE_PORT}/profile)
-  UP_COUNT=$(echo ${RESPONSE} | grep 'real' | wc -l)
+cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
-  if [ ${UP_COUNT} -ge 1 ]
-  then # $up_count >= 1 ("real" 문자열이 있는지 검증)
-      echo "> Health check 성공"
-      switch_proxy # 잘 떳다면, switch.sh의 switch_proxy로 Nginx 프록시 설정을 변경
-      break
-  else
-      echo "> Health check의 응답을 알 수 없거나 혹은 실행 상태가 아닙니다."
-      echo "> Health check: ${RESPONSE}"
-  fi
+echo "> 새 어플리케이션 배포"
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
-  if [ ${RETRY_COUNT} -eq 10 ]
-  then
-    echo "> Health check 실패. "
-    echo "> 엔진엑스에 연결하지 않고 배포를 종료합니다."
-    exit 1
-  fi
+echo "> JAR Name: $JAR_NAME"
 
-  echo "> Health check 연결 실패. 재시도..."
-  sleep 10
-done
+echo "> $JAR_NAME 에 실행권한 추가"
+
+chmod +x $JAR_NAME
+
+echo "> $JAR_NAME 실행"
+
+IDLE_PROFILE=$(find_idle_profile)
+
+echo "> $JAR_NAME 를 profile=$IDLE_PROFILE 로 실행합니다."
+nohup java -jar \
+    -Dspring.profiles.active=$IDLE_PROFILE \
+    $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &

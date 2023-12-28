@@ -9,11 +9,12 @@ function switch_proxy() {
 
     echo "> 전환할 Port: $IDLE_PORT"
     echo "> Port 전환"
-    # 하나의 문장을 만들어 파이프라인(|)으로 넘겨 주기 위해 echo를 사용. tee 는 앞의 문장을 읽어 해당 경로의 파일에 저장.
+    # 하나의 문장을 만들어 파이프라인(|)으로 넘겨 주기 위해 echo 사용
+    # 엔진엑스가 변경할 프록시 주소 생성
+    # 쌍따옴표를 사용하지 않으면 $service_url를 인식하지 못하고 변수를 찾는다
+    # 앞에서 넘겨 준 문장을 service-url.inc에 담는다
     echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
 
     echo "> 엔진엑스 Reload"
-    # restart와 달리 끊김 없이 다시 불러온다. (중요한 설정을 반영해야한다면 restart 사용)
-    # 여기선 외부의 설정 파일인 service-url을 다시 불러오기 때문에 reload로 가능
-    sudo service nginx reload
+    sudo service nginx reload # 엔진엑스 설정을 다시 불러온다 (외부 설정 파일인 service-url)
 }
