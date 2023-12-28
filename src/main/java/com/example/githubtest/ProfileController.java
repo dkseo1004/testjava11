@@ -26,4 +26,13 @@ public class ProfileController {
 			.findAny()
 			.orElse(defaultProfile);
 	}
+
+	@RestController
+	public class HealthController {
+
+		@GetMapping("/health")
+		public String checkHealth() {
+			return "healthy";
+		}
+	}
 }
