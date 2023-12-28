@@ -1,30 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-ABSPATH=$(readlink -f $0)
-ABSDIR=$(dirname $ABSPATH)
-source ${ABSDIR}/profile.sh   # import profile.sh
+ROOT_PATH="/home/ubuntu/cicd"
+JAR="$ROOT_PATH/application.jar"
 
-REPOSITORY=/home/ubuntu/app/step3
+APP_LOG="$ROOT_PATH/application.log"
+ERROR_LOG="$ROOT_PATH/error.log"
+START_LOG="$ROOT_PATH/start.log"
 
-echo "> Build 파일 복사"
-echo "> cp $REPOSITORY/zip/*.jar $REPOSITORY/"
+NOW=$(date +%c)
 
-cp $REPOSITORY/zip/*.jar $REPOSITORY/
+echo "[$NOW] $JAR 복사" >> $START_LOG
+cp $ROOT_PATH/build/libs/*.jar $JAR
 
-echo "> 새 어플리케이션 배포"
-JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)    # jar 이름 꺼내오기
+echo "[$NOW] > $JAR 실행" >> $START_LOG
+nohup java -jar $JAR > $APP_LOG 2> $ERROR_LOG &
 
-echo "> JAR Name: $JAR_NAME"
-
-echo "> $JAR_NAME 에 실행권한 추가"
-
-chmod +x $JAR_NAME
-
-echo "> $JAR_NAME 실행"
-
-IDLE_PROFILE=$(find_idle_profile)
-
-echo "> $JAR_NAME 를 profile=$IDLE_PROFILE 로 실행합니다."
-nohup java -jar \
-    -Dspring.profiles.active=$IDLE_PROFILE \
-    $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
+SERVICE_PID=$(pgrep -f $JAR)
+echo "[$NOW] > 서비스 PID: $SERVICE_PID" >> $START_LOG
