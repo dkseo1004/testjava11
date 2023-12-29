@@ -2,9 +2,7 @@ name: CICD
 run-name: Running
 on:
   push:
-    branches:
-      - production
-      - 'releases/**'
+    branches: [ "master" ]
 
 env:
   AWS_REGION: ap-northeast-2
