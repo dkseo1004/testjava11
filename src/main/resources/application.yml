@@ -1,5 +1,0 @@
-spring:
-  profiles:
-    group:
-      set1: set1
-      set2: set2

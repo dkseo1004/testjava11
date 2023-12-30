@@ -2,7 +2,7 @@ version: 0.0 # CodeDeploy 버전
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/app
+    destination: /home/ubuntu/good
     overwrite: yes
 
 permissions:
@@ -13,12 +13,12 @@ permissions:
 
 hooks:
   ApplicationStart:
-    - location: scripts/run_new_was.sh
+    - location: scripts/stop.sh
       timeout: 180
-      runas: ec2-user
-    - location: scripts/health_check.sh
+      runas: ubuntu
+    - location: scripts/start.sh
       timeout: 180
-      runas: ec2-user
-    - location: scripts/switch.sh
+      runas: ubuntu
+    - location: scripts/health.sh
       timeout: 180
-      runas: ec2-user
+      runas: ubuntu
