@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class ProfileController {
 	private final Environment env;
 
-	@GetMapping("/")
+	@GetMapping("/profile")
 	public String gyunny() {
 		List<String> profile = Arrays.asList(env.getActiveProfiles());
 		List<String> realProfiles = Arrays.asList("real1", "real2");
