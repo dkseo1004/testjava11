@@ -9,8 +9,7 @@ public class testController {
 
 	@GetMapping("/")
 	public String test(){
-			return "배포 버전확인중";
+			return "확인중입니다";
 	}
-
 
 }
