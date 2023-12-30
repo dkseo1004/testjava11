@@ -12,13 +12,13 @@ IDLE_PORT=$(find_idle_port)
 
 echo "> Health Check Start!"
 echo "> IDLE_PORT: $IDLE_PORT"
-echo "> curl -s http://localhost:$IDLE_PORT/actuator/health "
+echo "> curl -s http://15.164.237.55:$IDLE_PORT/profile "
 sleep 10
 
 for RETRY_COUNT in {1..10}
 do
-  RESPONSE=$(curl -s http://localhost:${IDLE_PORT}/actuator/health)
-  UP_COUNT=$(echo ${RESPONSE} | grep 'UP' | wc -l)
+  RESPONSE=$(curl -s http://15.164.237.55:${IDLE_PORT}/profile)
+  UP_COUNT=$(echo ${RESPONSE} | grep 'real' | wc -l)
 
   if [ ${UP_COUNT} -ge 1 ]
   then # $up_count >= 1 ("real" 문자열이 있는지 검증)
@@ -30,7 +30,7 @@ do
       echo "> Health check: ${RESPONSE}"
   fi
 
-  if [ ${RETRY_COUNT} -eq 0 ]
+  if [ ${RETRY_COUNT} -eq 10 ]
   then
     echo "> Health check 실패. "
     echo "> 엔진엑스에 연결하지 않고 배포를 종료합니다."
