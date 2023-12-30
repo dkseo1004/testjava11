@@ -17,7 +17,7 @@ function find_idle_profile()
 
     if [ ${CURRENT_PROFILE} == 8081 ]
     then
-      IDLE_PROFILE=real2 # 엔진엑스랑 연결되지 않은 profile
+      IDLE_PROFILE=8082 # 엔진엑스랑 연결되지 않은 profile
     else
       IDLE_PROFILE=8081
     fi
