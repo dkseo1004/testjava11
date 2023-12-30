@@ -19,6 +19,6 @@ hooks:
     - location: scripts/start.sh
       timeout: 180
       runas: ubuntu
-    - location: scripts/health.sh
+    - location: scripts/haelth.sh
       timeout: 180
       runas: ubuntu

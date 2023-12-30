@@ -10,7 +10,7 @@ function find_idle_profile()
 
     if [ ${RESPONSE_CODE} -ge 400 ] # 400 보다 크면 (즉, 40x/50x 에러 모두 포함)
     then
-        CURRENT_PROFILE=8082 # 정상적으로 수행 중이지 않을 경우
+        CURRENT_PROFILE=8081 # 정상적으로 수행 중이지 않을 경우
     else
         CURRENT_PROFILE=$(curl -s http://15.165.59.117/actuator/health)
     fi
@@ -30,10 +30,10 @@ function find_idle_port()
 {
     IDLE_PROFILE=$(find_idle_profile)
 
-    if [ ${IDLE_PROFILE} == 8082 ]
+    if [ ${IDLE_PROFILE} == set1 ]
     then
-      echo "8081"
+      echo 8081
     else
-      echo "8082"
+      echo 8082
     fi
 }
