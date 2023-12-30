@@ -4,7 +4,7 @@ ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh   # import profile.sh
 
-REPOSITORY=/home/ubuntu/cicd
+REPOSITORY=/home/ubuntu/app
 
 echo "> Build 파일 복사"
 echo "> cp $REPOSITORY/build/libs/*.jar $REPOSITORY/"
