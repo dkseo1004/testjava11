@@ -22,7 +22,7 @@ chmod +x $JAR_NAME
 
 echo "> $JAR_NAME 실행"
 
-IDLE_PROFILE=$(source ${ABSDIR}/find_idle_profile.sh)  # find_idle_profile.sh를 통해 profile 찾기
+IDLE_PROFILE=$(find_idle_profile) # find_idle_profile.sh를 통해 profile 찾기
 
 echo "> $JAR_NAME 를 profile=$IDLE_PROFILE 로 실행합니다."
 echo "> $IDLE_PROFILE 로 실행합니다."
