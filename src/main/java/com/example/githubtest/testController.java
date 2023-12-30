@@ -7,16 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class testController {
 
-	@GetMapping("/test")
+	@GetMapping("/")
 	public String test(){
 			return "s확인dsdasdadadsdsd중";
 	}
 
-	// @GetMapping("/")
-	// public String index() {
-	// 	return "index";
-	// }@GetMapping("/home")
-	// public String home() {
-	// 	return "home";
-	// }
+
 }
