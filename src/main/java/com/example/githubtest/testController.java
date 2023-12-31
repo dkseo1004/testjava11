@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class testController {
 
-	@GetMapping("/test")
+	@GetMapping("/")
 	public String test(){
-			return "확인중";
+			return "확인중입니다";
 	}
 
 }
