@@ -13,12 +13,7 @@ permissions:
 
 hooks:
   ApplicationStart:
-    - location: scripts/stop.sh
+    - location: scripts/deploy.sh
       timeout: 180
       runas: ubuntu
-    - location: scripts/start.sh
-      timeout: 180
-      runas: ubuntu
-    - location: scripts/haelth.sh
-      timeout: 180
-      runas: ubuntu
+
