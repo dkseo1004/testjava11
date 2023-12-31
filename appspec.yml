@@ -13,14 +13,14 @@ permissions:
 
 hooks: # CodeDeploy 배포 단계에서 실행할 명령어
   AfterInstall:
-    - location: stop.sh # 엔진엑스와 연결되어 있지 않은 스프링 부트를 종료
-      timeout: 60 # 스크립트 실행 60초 이상 수행되면 실패 (무한 대기할 수는 없으니 설정)
+    - location: scripts/stop.sh
+      timeout: 60
       runas: ubuntu
   ApplicationStart:
-    - location: start.sh # 엔진엑스와 연결되어 있지 않은 Port로 새 버전의 스프링 부트를 시작
+    - location: scripts/start.sh
       timeout: 60
       runas: ubuntu
   ValidateService:
-    - location: haelth.sh # 새 스프링 부트가 정상적으로 실행됐는지 확인
+    - location: scripts/haelth.sh # 새 스프링 부트가 정상적으로 실행됐는지 확인
       timeout: 60
       runas: ubuntu
