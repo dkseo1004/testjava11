@@ -49,10 +49,8 @@ jobs:
         run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
       - name: SLACK 알림
         if: always()
-        steps:
-          - uses: slackapi/slack-github-action@v1.24.0
-
-            with:
+      - uses: slackapi/slack-github-action@v1.24.0
+        with:
               status: ${{ job.status }}
               fields: workflow,job,commit,message,ref,author,took
 
