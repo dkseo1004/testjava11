@@ -9,6 +9,7 @@ env:
   AWS_CODE_BUCKET_NAME: dkseo8484   # 버킷 이름
   AWS_CODE_DEPLOY_APPLICATION: cd-application-cicd    # 애플리케이션 이름
   AWS_CODE_DEPLOY_GROUP: codeDeploy      # 배포 그룹 이름
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_UEL }}
 
 jobs:
   build-with-gradle:
@@ -45,3 +46,10 @@ jobs:
         run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://${{ env.AWS_CODE_BUCKET_NAME }}/cicdDir/$GITHUB_SHA.zip --source .
       - name: EC2에 배포
         run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
+      - name: SLACK 알림
+        steps:
+          - uses: 8398a7/action-slack@v3
+            with:
+              status: ${{ job.status }}
+              fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest
+            if: always()
