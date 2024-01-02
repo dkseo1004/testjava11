@@ -51,5 +51,5 @@ jobs:
           - uses: 8398a7/action-slack@v3
             with:
               status: ${{ job.status }}
-              fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest
+              fields: workflow,job,commit,message,ref,author,took
             if: always()
