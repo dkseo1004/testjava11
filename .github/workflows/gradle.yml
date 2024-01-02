@@ -9,7 +9,7 @@ env:
   AWS_CODE_BUCKET_NAME: dkseo8484   # 버킷 이름
   AWS_CODE_DEPLOY_APPLICATION: cd-application-cicd    # 애플리케이션 이름
   AWS_CODE_DEPLOY_GROUP: codeDeploy      # 배포 그룹 이름
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 
 jobs:
   build-with-gradle:
@@ -52,4 +52,6 @@ jobs:
             with:
               status: ${{ job.status }}
               fields: workflow,job,commit,message,ref,author,took
+              env:
+                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
             if: always()
