@@ -47,13 +47,10 @@ jobs:
         run: aws deploy push --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://${{ env.AWS_CODE_BUCKET_NAME }}/cicdDir/$GITHUB_SHA.zip --source .
       - name: EC2에 배포
         run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=${{ env.AWS_CODE_BUCKET_NAME }},key=cicdDir/$GITHUB_SHA.zip,bundleType=zip
-<<<<<<< HEAD
-=======
       - name: SLACK notification
         if: always()
         uses: slackapi/slack-github-action@v1.24.0
         with:
           status: ${{ job.status }}
           fields: workflow,job,commit,message,ref,author,took
->>>>>>> 9d881e400f27f0354b92859420d9543d047cc327
 
