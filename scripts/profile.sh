@@ -5,10 +5,9 @@
 # 쉬고 있는 profile 찾기: real1이 사용중이면 real2가 쉬고 있고, 반대면 real1이 쉬고 있음
 function find_idle_profile()
 {
-    # 현재 엔진엑스가 바라보는 스프링 부트의 정상 수행 여부 확인 -> HttpStatus
     RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/profile)
 
-    if [ ${RESPONSE_CODE} -ge 400 ] # 400 보다 크면 (즉, 40x/50x 에러 모두 포함)
+    if [ ${RESPONSE_CODE} -ge 400 ]
     then
         CURRENT_PROFILE=real2 # 정상적으로 수행 중이지 않을 경우
     else

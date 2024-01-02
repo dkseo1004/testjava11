@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ABSPATH=$(readlink -f $0)
-ABSDIR=$(dirname $ABSPATH) # 현재 stop.sh가 속한 경로
-source ${ABSDIR}/profile.sh # import 구문, profile.sh의 여러 function 사용 가능
+ABSDIR=$(dirname $ABSPATH)
+source ${ABSDIR}/profile.sh
 
 IDLE_PORT=$(find_idle_port)
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# $IDLE_PROFILE을 통해 properties 값을 가져오고 active profile을 지정한다
 
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
