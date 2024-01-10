@@ -11,7 +11,7 @@ permissions:
     owner: ubuntu
     group: ubuntu
 
-hooks: # CodeDeploy 배포 단계에서 실행할 명령어
+hooks: # CodeDeploy 배포 단계에서 실행할 명령
   AfterInstall:
     - location: scripts/deploy.sh
       timeout: 60
